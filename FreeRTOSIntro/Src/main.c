@@ -89,31 +89,34 @@ int main(void) {
 	 *
 	 * Also, the FreeRTOS documentation is quite solid, so that could also provide more background information
 	 *
-	 * To continue, uncomment one of the following two implementations. Take note of what the parameters mean
+	 * To continue, uncomment one of the following two implementations. Take note of what the parameters mean.
+	 *
+	 * If you have taken Operating Systems (or are eager to learn), read around the different mutexes, waits, and signals
+	 * that you can use to reliably communicate between threads.
+	 *
+	 * To complete this intro project, create three (3) tasks that turn on a GPIO at different times, and then wait for a signal. Create a
+	 * new task that waits for all three GPIOs to be written to (hint: use xEventGroupSync!!), turns them all off, and signals the 3 worker
+	 * tasks to continue again.
 	 */
 
 	//BOTH OF THE FOLLOWING DO THE EXACT SAME THING! CTRL+Click into osThreadCreate and see how the implementation is the same
 	/* You can create a task like this: */
 
 	//xTaskCreate(Onboard_LED_Blink_Task, "LD2_Blink", 128, NULL, 2, NULL);
-	/* or, STM gives some helper functions and structs to make it a little bit more readable (and have built-in error checking!) /*
+	/* or, STM gives some helper functions and structs to make it a little bit more readable (and have built-in error checking!) */
 
-	 //You can define a task struct like this with a name, the task function, priority, instances, and stack size:
-	 osThreadDef(LD2_Blink, LD2_Blink_Task, osPriorityNormal, 0, 128);
-	 //And then create a thread that takes the ThreadDef and some parameters:
-	 osThreadCreate(osThread(LD2_Blink), NULL);
+	//You can define a task struct like this with a name, the task function, priority, instances, and stack size:
+	osThreadDef(LD2_Blink, LD2_Blink_Task, osPriorityNormal, 0, 128);
+	//And then create a thread that takes the ThreadDef and some parameters:
+	osThreadCreate(osThread(LD2_Blink), NULL);
 
-
-	 /* USER CODE BEGIN RTOS_QUEUES */
+	/* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, when you're ready... */
 	/* USER CODE END RTOS_QUEUES */
 
 	/* Start scheduler */
 
-	//Simply calls vTaskStartScheduler();
-	osKernelStart();
-
-
+	osKernelStart(); //Simply calls vTaskStartScheduler();
 
 	/* We should never get here as control is now taken by the scheduler */
 
